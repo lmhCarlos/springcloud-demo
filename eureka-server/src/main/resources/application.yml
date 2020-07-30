@@ -1,0 +1,25 @@
+server:
+  port: 10086
+spring:
+  application:
+    name: eureka-server # 应用名称，会在Eureka中作为服务的id标识（serviceId）
+eureka:
+  client:
+    service-url: # EurekaServer的地址，现在是自己的地址，如果是集群，需要写其它Server的地址。
+      defaultZone: http://127.0.0.1:10086/eureka,http://127.0.0.1:10087/eureka
+  register-with-eureka: true # 不注册自己
+  fetch-registry: true #不拉取服务
+  instance:
+    ip-address: 127.0.0.1 # ip地址
+    prefer-ip-address: true # 更倾向于使用ip，而不是host名
+    instance-id: ${eureka.instance.ip-address}:${server.port} # 自定义实例的id
+ribbon:
+  ConnectTimeout: 500 # 连接超时时长
+  ReadTimeout: 2000 # 数据通信超时时长
+  MaxAutoRetries: 0 # 当前服务器的重试次数
+  MaxAutoRetriesNextServer: 1 # 重试多少次服务
+  OkToRetryOnAllOperations: false # 是否对所有的请求方式都重试
+feign:
+  hystrix:
+    enabled: true # 开启Feign的熔断功能
+

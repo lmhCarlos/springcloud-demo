@@ -1,0 +1,26 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: consumer-demo # 应用名称
+eureka:
+  client:
+    service-url: # EurekaServer地址
+      defaultZone: http://127.0.0.1:10086/eureka,http://127.0.0.1:10087/eureka
+
+ribbon:
+  eager-load:
+    enabled: true
+    clients: user-service
+
+hystrix:
+  command:
+    default:
+      execution.isolation.thread.timeoutInMilliseconds: 2000
+      circuitBreaker:
+        errorThresholdPercentage: 50 # 触发熔断错误比例阈值，默认值50%
+        sleepWindowInMilliseconds: 10000 # 熔断后休眠时长，默认值5秒
+        requestVolumeThreshold: 10 # 触发熔断的最小请求次数，默认20
+logging:
+  level:
+    cn.itcast:  debug
